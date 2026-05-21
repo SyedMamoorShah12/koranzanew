@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Cart.css";
 import { useShop } from "../context/ShopContext";
 import { useNavigate, Link } from "react-router-dom";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -160,7 +160,7 @@ const CartTable = () => {
                     <td className="total-cell">Rs {parsePrice(item.price) * item.quantity}</td>
                     <td className="action-cell">
                       <button className="btn-remove" onClick={() => removeItem(item.id)}>
-                        <span className="trash-icon">🗑️</span>
+                        <Trash2 size={20} strokeWidth={1.5} />
                       </button>
                     </td>
                   </tr>

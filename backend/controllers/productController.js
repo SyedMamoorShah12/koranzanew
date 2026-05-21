@@ -103,9 +103,20 @@ export const createProduct = async (req, res, next) => {
 
     // Note: Required fields are now validated by middleware in routes
 
-    // Handle image
+    // Handle images
     let imagePath = null;
-    if (req.file) {
+    let hoverImgPath = null;
+    let image2Path = null;
+    let image3Path = null;
+    let image4Path = null;
+
+    if (req.files) {
+      if (req.files['image']) imagePath = `/uploads/${req.files['image'][0].filename}`;
+      if (req.files['hoverImg']) hoverImgPath = `/uploads/${req.files['hoverImg'][0].filename}`;
+      if (req.files['image2']) image2Path = `/uploads/${req.files['image2'][0].filename}`;
+      if (req.files['image3']) image3Path = `/uploads/${req.files['image3'][0].filename}`;
+      if (req.files['image4']) image4Path = `/uploads/${req.files['image4'][0].filename}`;
+    } else if (req.file) {
       imagePath = `/uploads/${req.file.filename}`;
     }
 
@@ -120,7 +131,11 @@ export const createProduct = async (req, res, next) => {
       benefits,
       description,
       how_to_use,
-      image: imagePath
+      image: imagePath,
+      hoverImg: hoverImgPath,
+      image2: image2Path,
+      image3: image3Path,
+      image4: image4Path
     };
 
     const product = await Product.create(productData);
@@ -162,13 +177,51 @@ export const updateProduct = async (req, res, next) => {
 
     // Handle image update
     let imagePath = existingProduct.image;
-    if (req.file) {
-      // Delete old image if exists
+    let hoverImgPath = existingProduct.hoverImg;
+    let image2Path = existingProduct.image2;
+    let image3Path = existingProduct.image3;
+    let image4Path = existingProduct.image4;
+
+    if (req.files) {
+      if (req.files['image']) {
+        if (existingProduct.image) {
+          const oldPath = join(__dirname, '..', 'uploads', existingProduct.image.split('/').pop());
+          if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+        }
+        imagePath = `/uploads/${req.files['image'][0].filename}`;
+      }
+      if (req.files['hoverImg']) {
+        if (existingProduct.hoverImg) {
+          const oldPath = join(__dirname, '..', 'uploads', existingProduct.hoverImg.split('/').pop());
+          if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+        }
+        hoverImgPath = `/uploads/${req.files['hoverImg'][0].filename}`;
+      }
+      if (req.files['image2']) {
+        if (existingProduct.image2) {
+          const oldPath = join(__dirname, '..', 'uploads', existingProduct.image2.split('/').pop());
+          if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+        }
+        image2Path = `/uploads/${req.files['image2'][0].filename}`;
+      }
+      if (req.files['image3']) {
+        if (existingProduct.image3) {
+          const oldPath = join(__dirname, '..', 'uploads', existingProduct.image3.split('/').pop());
+          if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+        }
+        image3Path = `/uploads/${req.files['image3'][0].filename}`;
+      }
+      if (req.files['image4']) {
+        if (existingProduct.image4) {
+          const oldPath = join(__dirname, '..', 'uploads', existingProduct.image4.split('/').pop());
+          if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+        }
+        image4Path = `/uploads/${req.files['image4'][0].filename}`;
+      }
+    } else if (req.file) {
       if (existingProduct.image) {
         const oldImagePath = join(__dirname, '..', 'uploads', existingProduct.image.split('/').pop());
-        if (fs.existsSync(oldImagePath)) {
-          fs.unlinkSync(oldImagePath);
-        }
+        if (fs.existsSync(oldImagePath)) fs.unlinkSync(oldImagePath);
       }
       imagePath = `/uploads/${req.file.filename}`;
     }
@@ -184,7 +237,11 @@ export const updateProduct = async (req, res, next) => {
       benefits,
       description,
       how_to_use,
-      image: imagePath
+      image: imagePath,
+      hoverImg: hoverImgPath,
+      image2: image2Path,
+      image3: image3Path,
+      image4: image4Path
     };
 
     const product = await Product.update(id, productData);

@@ -1,24 +1,32 @@
 .wishlist-page {
-  padding: 4rem 0;
-  background-color: var(--bg-soft);
+  padding: 127px 0 96px; /* Top and Bottom padding from Figma */
+  background-color: #FFF9FA;
   min-height: 100vh;
 }
 
+.wishlist-page .container {
+  max-width: 1100px; /* Reduced from 1280px for a more compact feel */
+  padding: 0 40px; /* Slightly reduced side padding */
+  margin: 0 auto;
+}
+
 .wishlist-header {
-  margin-bottom: 4rem;
+  margin-bottom: 80px; /* Adjusted spacing */
+  text-align: center;
 }
 
 .wishlist-title {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 500;
   color: #1A1A1A;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.5px;
 }
 
 .wishlist-subtitle {
-  font-size: 0.95rem;
-  color: #777;
-  max-width: 500px;
+  font-size: 1rem;
+  color: #666;
+  max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
 }
@@ -26,7 +34,7 @@
 .wishlist-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
+  gap: 64px; /* Gap from Figma */
   margin-bottom: 4rem;
 }
 

@@ -124,6 +124,9 @@ const Navbar = () => {
           <li className={isActive("/about") ? "active" : ""}>
             <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About us</Link>
           </li>
+          <li className={isActive("/articles") ? "active" : ""}>
+            <Link to="/articles" onClick={() => setMobileMenuOpen(false)}>Articles / Blog</Link>
+          </li>
         </ul>
 
         <div className="nav-icons">
@@ -133,12 +136,13 @@ const Navbar = () => {
           </Link>
           <Link to="/heart" className="icon-link">
             <Heart size={20} strokeWidth={1.5} />
+            {wishlistItems.length > 0 && <span className="icon-badge">{wishlistItems.length}</span>}
           </Link>
           <Link to="/notifications" className="icon-link">
             <Bell size={20} strokeWidth={1.5} />
             <span className="icon-badge-dot"></span>
           </Link>
-          <Link to="/auth" className="icon-link">
+          <Link to="/account" className="icon-link">
             <User size={20} strokeWidth={1.5} />
           </Link>
 

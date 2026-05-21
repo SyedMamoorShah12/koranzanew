@@ -326,7 +326,7 @@ const ProductDetailsPage = () => {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedImage, setSelectedImage] = useState(null);
-    const { addToCart, products } = useShop();
+    const { addToCart, products, addToWishlist, isInWishlist } = useShop();
 
     // Fetch product details
     useEffect(() => {
@@ -337,9 +337,14 @@ const ProductDetailsPage = () => {
                 const response = await axios.get(`${BASE_URL}/api/products/${productId}`);
                 if (response.data.success) {
                     const data = response.data.data;
+                    const getUrl = (path) => path && !path.startsWith('http') ? `${BASE_URL}${path}` : path;
                     setProduct({
                         ...data,
-                        image: data.image || data.img,
+                        image: getUrl(data.image) || data.img,
+                        hoverImg: getUrl(data.hoverImg),
+                        image2: getUrl(data.image2),
+                        image3: getUrl(data.image3),
+                        image4: getUrl(data.image4),
                         originalPrice: data.original_price,
                         howToUse: data.how_to_use
                     });
@@ -447,35 +452,121 @@ const ProductDetailsPage = () => {
                             >
                                 <img src={product.image} alt="thumbnail" loading="lazy" />
                             </div>
-                            <div 
-                                className={`thumbnail ${selectedImage === "https://images.pexels.com/photos/8140916/pexels-photo-8140916.jpeg" ? 'active' : ''}`} 
-                                onClick={() => setSelectedImage("https://images.pexels.com/photos/8140916/pexels-photo-8140916.jpeg")}
-                            >
-                                <img src="https://images.pexels.com/photos/8140916/pexels-photo-8140916.jpeg?auto=compress&cs=tinysrgb&w=300" alt="thumbnail" loading="lazy" />
-                            </div>
-                            <div 
-                                className={`thumbnail ${selectedImage === "https://images.pexels.com/photos/8128065/pexels-photo-8128065.jpeg" ? 'active' : ''}`} 
-                                onClick={() => setSelectedImage("https://images.pexels.com/photos/8128065/pexels-photo-8128065.jpeg")}
-                            >
-                                <img src="https://images.pexels.com/photos/8128065/pexels-photo-8128065.jpeg?auto=compress&cs=tinysrgb&w=300" alt="thumbnail" loading="lazy" />
-                            </div>
+                            {(product.image2 || product.image3 || product.image4) ? (
+                                <>
+                                    {product.image2 && (
+                                        <div 
+                                            className={`thumbnail ${selectedImage === product.image2 ? 'active' : ''}`} 
+                                            onClick={() => setSelectedImage(product.image2)}
+                                        >
+                                            <img src={product.image2} alt="thumbnail" loading="lazy" />
+                                        </div>
+                                    )}
+                                    {product.image3 && (
+                                        <div 
+                                            className={`thumbnail ${selectedImage === product.image3 ? 'active' : ''}`} 
+                                            onClick={() => setSelectedImage(product.image3)}
+                                        >
+                                            <img src={product.image3} alt="thumbnail" loading="lazy" />
+                                        </div>
+                                    )}
+                                    {product.image4 && (
+                                        <div 
+                                            className={`thumbnail ${selectedImage === product.image4 ? 'active' : ''}`} 
+                                            onClick={() => setSelectedImage(product.image4)}
+                                        >
+                                            <img src={product.image4} alt="thumbnail" loading="lazy" />
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    <div 
+                                        className={`thumbnail ${selectedImage === "https://images.pexels.com/photos/8140916/pexels-photo-8140916.jpeg" ? 'active' : ''}`} 
+                                        onClick={() => setSelectedImage("https://images.pexels.com/photos/8140916/pexels-photo-8140916.jpeg")}
+                                    >
+                                        <img src="https://images.pexels.com/photos/8140916/pexels-photo-8140916.jpeg?auto=compress&cs=tinysrgb&w=300" alt="thumbnail" loading="lazy" />
+                                    </div>
+                                    <div 
+                                        className={`thumbnail ${selectedImage === "https://images.pexels.com/photos/8128065/pexels-photo-8128065.jpeg" ? 'active' : ''}`} 
+                                        onClick={() => setSelectedImage("https://images.pexels.com/photos/8128065/pexels-photo-8128065.jpeg")}
+                                    >
+                                        <img src="https://images.pexels.com/photos/8128065/pexels-photo-8128065.jpeg?auto=compress&cs=tinysrgb&w=300" alt="thumbnail" loading="lazy" />
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
 
                     <div className="product-info-panel">
                         <div className="tag-bestseller">BESTSELLER</div>
                         <h1 className="product-name serif">{product.name}</h1>
-                        <p className="product-price serif text-magenta">
-                            Pkr {product.price ? Number(String(product.price).replace(/[^0-9.]/g, '')).toFixed(2) : "0.00"}
-                        </p>
+
+                        {/* Price block */}
+                        <div className="pdp-price-block">
+                            <span className="pdp-price">
+                                Pkr {product.price ? Number(String(product.price).replace(/[^0-9.]/g, '')).toLocaleString() : '0'}
+                            </span>
+                            {product.originalPrice && (
+                                <>
+                                    <span className="pdp-price-old">
+                                        Pkr {Number(String(product.originalPrice).replace(/[^0-9.]/g, '')).toLocaleString()}
+                                    </span>
+                                    {(() => {
+                                        const curr = Number(String(product.price).replace(/[^0-9.]/g, ''));
+                                        const orig = Number(String(product.originalPrice).replace(/[^0-9.]/g, ''));
+                                        const pct = orig > curr ? Math.round(((orig - curr) / orig) * 100) : 0;
+                                        return pct > 0 ? <span className="pdp-discount-badge">{pct}% OFF</span> : null;
+                                    })()}
+                                </>
+                            )}
+                        </div>
+
+                        {/* Stock indicator */}
+                        {(() => {
+                            const stock = product.stock ?? null;
+                            if (stock === null) return null;
+                            if (stock <= 0) return (
+                                <div className="pdp-stock out">
+                                    <span className="pdp-stock-dot"></span>
+                                    Out of Stock
+                                </div>
+                            );
+                            if (stock <= 5) return (
+                                <div className="pdp-stock low">
+                                    <span className="pdp-stock-dot"></span>
+                                    ⚡ Only <strong style={{margin:'0 3px'}}>{stock}</strong> items left!
+                                </div>
+                            );
+                            return (
+                                <div className="pdp-stock in">
+                                    <span className="pdp-stock-dot"></span>
+                                    <strong style={{marginRight:'4px'}}>{stock}</strong> in stock
+                                </div>
+                            );
+                        })()}
                         
                         <p className="product-summary">
                             {product.description || "A lightweight, transformative serum that infuses your skin with deep hydration and a luminous, petal-soft glow."}
                         </p>
                         
-                        <button className="btn-add-to-bag" onClick={() => addToCart({ ...product, quantity: 1 })}>
-                            ADD TO BAG
-                        </button>
+                        <div className="add-to-bag-row">
+                            <button
+                                className="btn-add-to-bag"
+                                onClick={() => addToCart({ ...product, quantity: 1 })}
+                                disabled={(product.stock ?? null) !== null && product.stock <= 0}
+                                style={(product.stock ?? null) !== null && product.stock <= 0 ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
+                            >
+                                {((product.stock ?? null) !== null && product.stock <= 0) ? 'OUT OF STOCK' : 'ADD TO BAG'}
+                            </button>
+                            <button 
+                                className={`wishlist-toggle-btn ${isInWishlist(product.id) ? 'active' : ''}`}
+                                onClick={() => addToWishlist(product)}
+                                aria-label="Toggle wishlist"
+                            >
+                                <Heart size={20} fill={isInWishlist(product.id) ? "var(--primary)" : "none"} color={isInWishlist(product.id) ? "var(--primary)" : "#555"} />
+                            </button>
+                        </div>
 
                         <div className="shipping-info">
                             <Truck size={16} />

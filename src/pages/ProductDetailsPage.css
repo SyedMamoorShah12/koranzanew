@@ -228,6 +228,107 @@
   margin-bottom: 2rem;
 }
 
+/* ── PDP PRICE BLOCK ─────────────────────────────────────── */
+.pdp-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.pdp-price {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  letter-spacing: -0.03em;
+}
+
+.pdp-price-old {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #BBBBBB;
+  text-decoration: line-through;
+}
+
+.pdp-discount-badge {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, #FF4D8D, #D43D75);
+  padding: 0.25rem 0.8rem;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+}
+
+/* ── PDP STOCK INDICATOR ─────────────────────────────────── */
+.pdp-stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  width: fit-content;
+}
+
+.pdp-stock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pdp-stock.in {
+  background: #F0FFF4;
+  color: #2D7A47;
+  border: 1px solid #A8E6BE;
+}
+
+.pdp-stock.in .pdp-stock-dot {
+  background: #34A853;
+  box-shadow: 0 0 0 3px rgba(52, 168, 83, 0.2);
+  animation: pulse-green 2s infinite;
+}
+
+.pdp-stock.low {
+  background: #FFF8E7;
+  color: #B45309;
+  border: 1px solid #FDD68A;
+}
+
+.pdp-stock.low .pdp-stock-dot {
+  background: #F59E0B;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+  animation: pulse-amber 1.5s infinite;
+}
+
+.pdp-stock.out {
+  background: #FFF5F5;
+  color: #C53030;
+  border: 1px solid #FEB2B2;
+}
+
+.pdp-stock.out .pdp-stock-dot {
+  background: #E53E3E;
+}
+
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(52, 168, 83, 0.2); }
+  50%       { box-shadow: 0 0 0 6px rgba(52, 168, 83, 0.05); }
+}
+
+@keyframes pulse-amber {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); }
+  50%       { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.05); }
+}
+
 .product-summary {
   font-size: 0.95rem;
   line-height: 1.6;
@@ -236,8 +337,15 @@
   max-width: 450px;
 }
 
+.add-to-bag-row {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+  align-items: center;
+}
+
 .btn-add-to-bag {
-  width: 100%;
+  flex: 1;
   background-color: #FF4D8D;
   color: white;
   border: none;
@@ -248,7 +356,31 @@
   letter-spacing: 1.5px;
   cursor: pointer;
   transition: var(--transition-smooth);
-  margin-bottom: 1.2rem;
+}
+
+.wishlist-toggle-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 1px solid #F0F0F0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  flex-shrink: 0;
+}
+
+.wishlist-toggle-btn:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 77, 141, 0.1);
+}
+
+.wishlist-toggle-btn.active {
+  border-color: var(--primary);
+  background-color: #FFF9FA;
 }
 
 .btn-add-to-bag:hover {

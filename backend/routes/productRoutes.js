@@ -47,9 +47,17 @@ router.get('/:id', getProductById);
 router.post('/categories', upload.single('image'), createCategory);
 router.delete('/categories/:name', deleteCategory);
 
+const cpUpload = upload.fields([
+  { name: 'image', maxCount: 1 },
+  { name: 'hoverImg', maxCount: 1 },
+  { name: 'image2', maxCount: 1 },
+  { name: 'image3', maxCount: 1 },
+  { name: 'image4', maxCount: 1 }
+]);
+
 // Admin routes - Create, Update, Delete products
-router.post('/', upload.single('image'), validate(productValidation), createProduct);
-router.put('/:id', upload.single('image'), validate(updateValidation), updateProduct);
+router.post('/', cpUpload, validate(productValidation), createProduct);
+router.put('/:id', cpUpload, validate(updateValidation), updateProduct);
 router.delete('/:id', param('id').isInt(), validate([]), deleteProduct);
 router.patch('/:id/stock', validate(stockValidation), updateStock);
 

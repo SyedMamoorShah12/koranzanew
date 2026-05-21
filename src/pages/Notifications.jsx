@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Settings, ClipboardList, HelpCircle, LogOut, Package, Gift, Sparkles, Check, ChevronRight, ShoppingBag } from 'lucide-react';
 import './Notifications.css';
 
@@ -72,25 +73,25 @@ const Notifications = () => {
 
                     <nav className="sidebar-nav">
                         <div className="nav-group">
-                            <div className="nav-item">
+                            <Link to="/account" className="nav-item">
                                 <Settings size={18} />
                                 <span>Account Settings</span>
-                            </div>
-                            <div className="nav-item">
+                            </Link>
+                            <Link to="/orders" className="nav-item">
                                 <ClipboardList size={18} />
                                 <span>Order History</span>
-                            </div>
+                            </Link>
                         </div>
 
                         <div className="nav-group bottom">
-                            <div className="nav-item">
+                            <Link to="/support" className="nav-item">
                                 <HelpCircle size={18} />
                                 <span>Support</span>
-                            </div>
-                            <div className="nav-item">
+                            </Link>
+                            <Link to="/auth" className="nav-item">
                                 <LogOut size={18} />
                                 <span>Sign Out</span>
-                            </div>
+                            </Link>
                         </div>
                     </nav>
                 </aside>

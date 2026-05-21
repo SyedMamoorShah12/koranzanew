@@ -1,6 +1,6 @@
 // Category Covers
 import eyeCover from '../assets/Images/Eye/Eyes.png';
-import faceCover from '../assets/Images/face/face.png';
+import faceCover from '../assets/Images/face/face.jpeg';
 import lipCover from '../assets/Images/lip/Lips.png';
 import skincareCover from '../assets/Images/skincaree/skincare.png';
 
@@ -16,6 +16,8 @@ import faceBlush from '../assets/Images/face/cushion_blush-removebg-preview.png'
 import faceFoundation from '../assets/Images/face/peachmanu_foundation-removebg-preview.png';
 import faceGlowCream from '../assets/Images/face/peachmnu_glow_cream-removebg-preview.png';
 import faceWrinkleCream from '../assets/Images/face/wrinkle_cream-removebg-preview.png';
+import faceMainImg from '../assets/Images/face/face.jpeg';
+import faceDetailImg from '../assets/Images/face/Detail.png';
 
 // Hensam Products
 import Hansam from '../assets/Images/Hensam/Hansam.png';
@@ -63,6 +65,7 @@ export const products = [
         name: 'Radiance Dew Serum',
         category: 'Skincare',
         price: '999',
+        originalPrice: '1420',
         skinType: 'Normal, Dry, Sensitive',
         benefits: 'Hydration, Brightening',
         isBestSeller: true,
@@ -73,6 +76,7 @@ export const products = [
         name: 'Silk Recovery Cream',
         category: 'Skincare',
         price: '999',
+        originalPrice: '1420',
         skinType: 'Dry, Sensitive',
         benefits: 'Anti-Aging, Hydration',
         isNew: true,
@@ -83,6 +87,7 @@ export const products = [
         name: 'Cloud Cleanser',
         category: 'Skincare',
         price: '999',
+        originalPrice: '1420',
         skinType: 'Normal, Oily, Combination',
         benefits: 'Hydration, Acne',
         img: 'https://images.pexels.com/photos/8140916/pexels-photo-8140916.jpeg?auto=compress&cs=tinysrgb&w=800'
@@ -92,6 +97,7 @@ export const products = [
         name: 'Midnight Elixir',
         category: 'Skincare',
         price: '999',
+        originalPrice: '1420',
         benefits: 'Bakuchiol & Squalane',
         isEditorsPick: true,
         img: 'https://images.pexels.com/photos/8128065/pexels-photo-8128065.jpeg?auto=compress&cs=tinysrgb&w=800'
@@ -440,6 +446,20 @@ export const products = [
         description: 'Enriched with green tea extract to provide a refreshing and antioxidant-rich cleansing experience.',
         howToUse: 'Rinse with lukewarm water after massaging face.',
         img: skinMain
+    },
+    {
+        id: 37,
+        name: 'Cucumber Deep Cleansing Foam',
+        category: 'Face Products',
+        price: 'Rs 1899',
+        originalPrice: 'Rs 2699',
+        stock: 25,
+        skinType: 'All Skin Types',
+        benefits: 'Refreshing and Hydrating',
+        description: 'Visibly clean & hydrated skin with the power of Cucumber. Deeply cleanses dirt, oil and impurities while balancing oil and improving skin clarity.',
+        howToUse: '1. Wet your face.\n2. Squeeze an appropriate amount.\n3. Massage gently in circular motions.\n4. Rinse with water.',
+        img: faceMainImg,
+        hoverImg: faceDetailImg
     },
     {
         id: 31,

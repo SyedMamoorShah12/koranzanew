@@ -15,8 +15,10 @@ import Wishlist from "./pages/Wishlist";
 import Auth from "./pages/Auth";
 import CategoryPage from "./pages/CategoryPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
+import ArticlesPage from "./pages/ArticlesPage";
 import Checkout from "./pages/Checkout";
 import Notifications from "./pages/Notifications";
+import AccountSettings from "./pages/AccountSettings";
 import WhatsAppButton from "./Components/WhatsAppButton";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -107,8 +109,10 @@ export default function App() {
           {/* SHOP ROUTES */}
           <Route path="/category/:categoryName" element={<><CategoryPage /><Footer /></>} />
           <Route path="/product/:productId" element={<><ProductDetailsPage /><Footer /></>} />
+          <Route path="/articles" element={<><ArticlesPage /><Footer /></>} />
           <Route path="/checkout" element={<><Checkout /><Footer /></>} />
           <Route path="/notifications" element={<><Notifications /><Footer /></>} />
+          <Route path="/account" element={<><AccountSettings /><Footer /></>} />
         </Routes>
       </div>
     </>
